@@ -1,7 +1,9 @@
+//retrieve password length
 var x = prompt("How many characters would you like your password to be? (8-120): ");
 var charLength = parseInt(x);
 console.log(charLength);
 
+//password paramaters
 var upBool = confirm("Would you like to use uppercase letters in your password?: ");
 console.log(upBool);
 
@@ -14,6 +16,7 @@ console.log(numBool);
 var specBool = confirm("Would you like to use special characters in your password?: ");
 console.log(specBool);
 
+//tracks how many different types of characters youd like
 var charPossibilities = 0;
 if(upBool===true){
     charPossibilities++;
@@ -28,6 +31,7 @@ if(specBool===true){
     charPossibilities++;
 }
 
+//retrieves a random character from each type selected
 var passGen = {
     
     lowerSelect: function (){
@@ -67,13 +71,18 @@ var passGen = {
     }
 
 }
+
+//executes code on button click
 var genElement=document.querySelector(".btn");
 genElement.addEventListener("click",function(event){
     event.preventDefault();
+    //array in which password characters are kept
     var passArray=[];
+    //makes sure password is between 8 and 120 characters
     if(charLength>=8 && charLength<=120){
         for(var j=0;j<charLength;j++){
             var y = 0;
+            //array in which one of each type of character is called from generator
             var charIndex=[];
 
             if(lowBool===true){
@@ -91,12 +100,14 @@ genElement.addEventListener("click",function(event){
             if(specBool===true){
                 charIndex[y]=passGen.specialSelect();
             }
-
+            //selects which character of the four in the arry to choose
         var charSelector = Math.floor(Math.random()*charPossibilities);
         passArray[j]=charIndex[charSelector];
         }
+        //displays password
     document.getElementById("password-text").textContent = passArray.join("");
     }
+    //error message if password too short or too long
     else{
         document.getElementById("password-text").textContent ="Please refresh and select a password length between 8 and 120 characters";
     }
